@@ -622,12 +622,12 @@ public class SupplicantStaIfaceHal {
      */
     public boolean startDaemon() {
         synchronized (mLock) {
+            Log.i(TAG, "Starting supplicant using init");
+            mPropertyService.set(INIT_START_PROPERTY, INIT_SERVICE_NAME);
             if (isV1_1()) {
                 Log.i(TAG, "Starting supplicant using HIDL");
                 return startDaemon_V1_1();
             } else {
-                Log.i(TAG, "Starting supplicant using init");
-                mPropertyService.set(INIT_START_PROPERTY, INIT_SERVICE_NAME);
                 return true;
             }
         }
@@ -741,7 +741,7 @@ public class SupplicantStaIfaceHal {
      * the device.
      * @return true if supported, false otherwise.
      */
-    private boolean isV1_1() {
+    /* package */ boolean isV1_1() {
         return checkHalVersionByInterfaceName(
                 android.hardware.wifi.supplicant.V1_1.ISupplicant.kInterfaceName);
     }
@@ -751,7 +751,7 @@ public class SupplicantStaIfaceHal {
      * the device.
      * @return true if supported, false otherwise.
      */
-    private boolean isV1_2() {
+    /* package */ boolean isV1_2() {
         return checkHalVersionByInterfaceName(
                 android.hardware.wifi.supplicant.V1_2.ISupplicant.kInterfaceName);
     }
